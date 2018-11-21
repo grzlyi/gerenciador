@@ -5,11 +5,11 @@
 #include <ctype.h>
 #include "funcoes.h"
 
-#define tamanho 50
+
 void novotime(int quantidade){
 	printf("\nIncluir novo Time\n");
 
-        if(quantos < tamanho){
+        if(quantos < 50){
           printf("\nDigite o codigo do time: ");
           scanf("%d", &menuTimes[quantidade].codigo);
 
@@ -19,7 +19,11 @@ void novotime(int quantidade){
           scanf("%s", menuTimes[quantidade].time);
 
           fflush(stdin);
+          
+	      printf("\nDigite os nomes dos Jogadores: ");
+          scanf("%s", menuTimes[quantidade].jogadores);
 
+          fflush(stdin);
           printf("\nDigite o endereco: ");
           scanf("%s", menuTimes[quantidade].ender);
 
@@ -35,10 +39,6 @@ void novotime(int quantidade){
 
           printf("\nDigite o ano de Fundacao do time: ");
           scanf("%s", menuTimes[quantidade].ano);
-          
-          fflush(stdin);
-          printf("\nDigite o nome do dos Jogadores: ");
-          scanf("%s", menuTimes[quantidade].jogadores);
 
           printf("\nTime cadastrado com sucesso\n");
 
@@ -64,12 +64,12 @@ void consultar_time(int quantidade){
             achou = 1;
 
             printf("\nNome do Time.: %s", menuTimes[i].time);
+            printf("\nNome do Time.: %s", menuTimes[i].jogadores);
             printf("\nCodigo.......: %d", menuTimes[i].codigo);
             printf("\nEndereco.....: %s", menuTimes[i].ender);
             printf("\nCidade.......: %s", menuTimes[i].cidade);
             printf("\nEstado.......: %s", menuTimes[i].estado);
             printf("\nFundado em: .: %s\n", menuTimes[i].ano);
-            printf("\nFundado em: .: %s\n", menuTimes[i].jogadores);
           }
     }
 
@@ -116,6 +116,8 @@ void excluir_time(int quantidade){
                 achou = 1;
                 strcpy(nometime,menuTimes[quantidade].time);
                 strcpy(menuTimes[i].time,nometime);
+                strcpy(nometime,menuTimes[quantidade].jogadores;
+                strcpy(menuTimes[i].jogadores,nometime);
                 strcpy(nometime,menuTimes[quantidade].ano);
                 strcpy(menuTimes[i].ano,nometime);
                 strcpy(nometime,menuTimes[quantidade].cidade);
@@ -125,7 +127,7 @@ void excluir_time(int quantidade){
                 strcpy(menuTimes[i].ender,nometime);
                 strcpy(nometime,menuTimes[quantidade].estado);
                 strcpy(menuTimes[i].estado,quantidade);
-                strcpy(menuTimes[i].estado,jogadores);
+
                 printf("\nTime removido com sucesso\n");
             }
         }
@@ -140,12 +142,12 @@ void imprimir_times(int quantidade){
 
          for(i=0; i<quantidade; i++){
            printf("\nNome do Time.: %s", menuTimes[i].time);
+           printf("\nJogadores.: %s", menuTimes[i].jogadores);
            printf("\nCodigo.......: %i", menuTimes[i].codigo);
            printf("\nEndereco.....: %s", menuTimes[i].ender);
            printf("\nCidade.......: %s", menuTimes[i].cidade);
            printf("\nEstado.......: %s", menuTimes[i].estado);
            printf("\nFundado em...: %s\n", menuTimes[i].ano);
-           printf("\nFundado em...: %s\n", menuTimes[i].jogadores);
 
          }
 }
