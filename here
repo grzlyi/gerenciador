@@ -1,0 +1,171 @@
+#include <stdlib.h> /*define quatro tipos de variáveis, várias macros e várias funções para executar funções gerais.*/
+#include <stdio.h> /*define três tipos de variáveis, várias macros e várias funções para executar entrada e saída.*/
+#include <string.h> /* define um tipo de variável, uma macro e várias funções para manipular matrizes de caracteres.*/
+
+
+
+
+  typedef struct{      
+
+    char time[30];
+    char tecnico [11];     /*  declção das struct,    */
+    int codigo;
+    char cidade[50];
+    char estado[40];
+    int ano;
+
+  }Times;
+	  Times lertime(){
+		  Times timesA;
+	    printf("Digite o nome do seu Time: ");
+	    getchar();                                    // ele serve para pegar um caracteri, se não tivese ele o printf  Times não iria ser chamado.
+	    fgets(timesA.time, sizeof(timesA.time), stdin);
+		  setbuf(stdin, NULL);   
+		                                                 /* entrada das infomaçães*/
+	    printf("Digite o nome do Tecnico: ");
+	    fgets(timesA.tecnico, sizeof(timesA.tecnico), stdin);
+		  setbuf(stdin, NULL);
+	
+	    printf("Digite o codigo do Time: ");
+	    scanf("%d",&timesA.codigo);
+	    getchar();                         // ele serve para pegar um caracteri, se não tivese ele o printf  codigo não iria ser chamado
+	    printf("Digite o nome da Cidade: ");
+	    fgets(timesA.cidade, sizeof(timesA.cidade), stdin);
+		  setbuf(stdin, NULL);
+	
+	    printf("Digite o nome do Estado: ");
+	    fgets(timesA.estado, sizeof(timesA.estado), stdin);
+		  setbuf(stdin, NULL);
+	
+	    printf("Digite o ano do Time: ");
+	    scanf("%d",&timesA.ano);
+		  setbuf(stdin, NULL);
+		  return timesA;
+	  }
+	  Times* cadastrar_times(Times *vet, int *n,Times add){       /*   funcao que adiciona  os times como locação dimanica */
+	    vet=(Times*) realloc (vet,(*n+1)*sizeof(Times));
+	    if (vet==0){
+	      return 0;
+	    } vet[*n]=add;
+	     (*n)++;
+	     return vet;
+	
+	
+	  } 
+	   Times* excluir_times(Times *vet, int codigo, int *n){     /*fumcao que remover os times com locacao dimanica */
+	   	int i;
+	   	for(i=0;i<*n;i++){
+	   		if(codigo==vet[i].codigo){                                         /*  funcao para excuir os times pelo codigo */
+	   			vet[i]=vet[*n-1];
+	   			vet=(Times*) realloc (vet,(*n-1)*sizeof(Times));
+	   			(*n)--;	   		
+			   } 
+		   }
+		   return vet;
+	   }	
+		
+   
+
+void menu() {
+
+    printf("\n\n==============================================\n\n");
+    printf("\n G E R E N C I A M E N T O");
+    printf("\n D E T I M E S");
+    printf(" D E F U T E B O L\n\n");
+	printf("\n\n===============================================\n");
+
+    printf("\nI. INCLUIR NOVO TIME");
+    printf("\nC. CONSULTAR TIMES PELO NOME");
+    printf("\nA. ALTERAR UM TIME");
+    printf("\nE. EXCLUIR UM TIME");                                            /* menu que sera impresso para o usuario*/
+    printf("\nM. IMPRIMIR O CADASTRO DE TIMES");
+    printf("\nL. LIMPAR TELA");
+    printf("\nS. SAIR");
+
+
+    printf("\n\n===============================================\n");
+
+
+}
+
+void aqr(Times* vet, int n, FILE *f){
+	f = fopen("dados.txt", "w");
+	if(n == 0){
+		fprintf(f, "Ainda não existem dados\n");
+		return;
+	}
+	for(int i = 0; i < n; ++i){
+		fprintf(f, "----------------");
+		fprintf(f, "%s\n", vet[i].time);
+		fprintf(f, "%s\n", vet[i].tecnico);
+		fprintf(f, "%d\n", vet[i].codigo);
+		fprintf(f, "%s\n", vet[i].cidade);
+		fprintf(f, "%s\n", vet[i].estado);
+		fprintf(f, "%d\n", vet[i].ano);
+		fprintf(f,"-------------------");
+	}
+	fclose(f);
+}
+
+int main(){
+char opcao = 0;
+Times *vet = 0;    // declarão do ponteiro em verto.
+int i,n = 0;
+int c = 0;
+while(opcao!=7){
+   menu();
+   printf("\nDigite a opcao desejada: ");
+   scanf("%s", &opcao);
+  	switch(opcao){
+			case 'I':{ Times A = lertime();                                       /*funcao principal aqui chama todas as funcoes que estao fora dela */
+      vet = cadastrar_times(vet,&n,A);
+      system("cls");
+        printf("\nT I M E  A D I C I O N A D O   C O M   S U C E S S O !\n");
+        c++;
+			break;
+      }
+			case 'C': //   Consultar um time pelo nome
+			//	void consultar_time(int quantidade);
+				break;
+			 case 'A': // Alterar um Time
+			 	//void alterar_time(int quantidade);
+			 	break;
+			 case 'E': // Excluir um Time
+			{
+				int codigo;
+				scanf("%d",&codigo);
+			  vet=excluir_times(vet,codigo,&n);
+			  break;
+				 }
+			 case 'M': // Imprimir o Cadastro de Times
+			 	{
+			 		for(i=0;i<n;i++){
+			 			printf("Time: %s\n",vet[i].time);
+			 			printf("Tecnico: %s\n",vet[i].tecnico);
+			 			printf("Codigo: %d\n\n",vet[i].codigo);
+			 			printf("Cidade: %s\n",vet[i].cidade);
+			 			printf("Estado: %s\n",vet[i].estado);
+			 			printf("Ano: %d\n",vet[i].ano);
+					 }
+				 }
+			 	break;
+			 case 'L': // Limpar tela
+			 	printf("\nLimpando tela..\n");
+			 	break;
+			 case 'S':  //Sair
+			 	printf("\n===============================================\n");
+			 	printf("\n A T E  M A I S ! \n");
+				printf("\n===============================================\n");
+				FILE *f = NULL;
+				aqr(vet,c, f);
+                 return 0;
+				default:
+			 		printf("Opcao incorreta");
+			 		break;
+		}
+	}
+
+
+	    return 0;
+
+}
